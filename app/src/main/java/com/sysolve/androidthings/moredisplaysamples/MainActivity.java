@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.google.android.things.pio.Gpio;
+import com.google.android.things.pio.GpioCallback;
 import com.google.android.things.pio.PeripheralManagerService;
 import com.google.android.things.pio.Pwm;
 import com.sysolve.androidthings.utils.BoardSpec;
@@ -15,6 +16,8 @@ import java.io.IOException;
 public class MainActivity extends Activity {
     private static final String TAG = MainActivity.class.getSimpleName();
 
+    Gpio mButtonGpio = null;
+
     private Pwm pwmRed;
     private Pwm pwmGreen;
 
@@ -24,6 +27,9 @@ public class MainActivity extends Activity {
     public double A_GREEN = 0.5;
     public double A_BLUE = 1;
 
+    int buttonPressedTimes = 0;
+
+    boolean displayWhite = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,32 +43,32 @@ public class MainActivity extends Activity {
             pwmBlue = new SoftPwm(service.openGpio(BoardSpec.getInstance().getGpioPin(BoardSpec.PIN_35)));
 
             pwmRed.setPwmDutyCycle(100*A_RED);       //percent, 0-100
-            pwmRed.setPwmFrequencyHz(100);
+            pwmRed.setPwmFrequencyHz(50);
             pwmRed.setEnabled(true);
 
             pwmGreen.setPwmDutyCycle(100*A_GREEN);
-            pwmGreen.setPwmFrequencyHz(100);
+            pwmGreen.setPwmFrequencyHz(50);
             pwmGreen.setEnabled(true);
 
             pwmBlue.setPwmDutyCycle(100*A_BLUE);
-            pwmBlue.setPwmFrequencyHz(100);
+            pwmBlue.setPwmFrequencyHz(50);
             pwmBlue.setEnabled(true);
 
-            new Thread(new Runnable() {
+            //define a button for counter
+            mButtonGpio = service.openGpio(BoardSpec.getGoogleSampleButtonGpioPin());
+            mButtonGpio.setDirection(Gpio.DIRECTION_IN);
+            mButtonGpio.setEdgeTriggerType(Gpio.EDGE_FALLING);
+            mButtonGpio.registerGpioCallback(new GpioCallback() {
                 @Override
-                public void run() {
-                    try {
-                        Thread.sleep(5000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    while (true) {
-                        for (int i=0;i<=100;i+=5) setRGB(100-i, i, 0);     //Red --> Green
-                        for (int i=0;i<=100;i+=5) setRGB(0, 100-i, i);     //Green --> Blue
-                        for (int i=0;i<=100;i+=5) setRGB(i, 0, 100-i);     //Blue --> Red
-                    }
+                public boolean onGpioEdge(Gpio gpio) {
+                    buttonPressedTimes++;
+                    Log.i(TAG, "GPIO changed, button pressed "+ buttonPressedTimes);
+                    toggleDisplayMode();
+
+                    // Return true to continue listening to events
+                    return true;
                 }
-            }).start();
+            });
 
         } catch (Exception e) {
             Log.e(TAG, e.getMessage(), e);
@@ -78,6 +84,41 @@ public class MainActivity extends Activity {
             Thread.sleep(50);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public int runId;
+    public void toggleDisplayMode() {
+        displayWhite = !displayWhite;
+        if (displayWhite) {
+            setRGB(100, 100, 100);
+        } else {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    int id = ++runId;
+                    while (!displayWhite && id==runId) {
+                        for (int i=0;i<=100;i+=5) {
+                            if (!displayWhite && id==runId)
+                                setRGB(100-i, i, 0);     //Red --> Green
+                            else
+                                break;
+                        }
+                        for (int i=0;i<=100;i+=5) {
+                            if (!displayWhite && id==runId)
+                                setRGB(0, 100-i, i);     //Green --> Blue
+                            else
+                                break;
+                        }
+                        for (int i=0;i<=100;i+=5) {
+                            if (!displayWhite && id==runId)
+                                setRGB(i, 0, 100-i);     //Blue --> Red
+                            else
+                                break;
+                        }
+                    }
+                }
+            }).start();
         }
     }
 
