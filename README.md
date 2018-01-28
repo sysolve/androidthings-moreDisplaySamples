@@ -67,7 +67,7 @@ pwmRed.setEnabled(true);
 
 接线很简单，VCC连接到+5V，GND接开发板的GND，CLK连接到开发板的PIN38，DIO连接到开发板的PIN36即可。
 
-![4位数码管模块连接图](https://github.com/sysolve/androidthings-moreDisplaySamples/blob/master/photos/schematics_4digitalDisplay.png)
+![4位数码管模块连接图](https://github.com/sysolve/androidthings-moreDisplaySamples/blob/master/photos/schematics_4digitDisplay.png)
 
 控制显示的代码也很简单：
 
