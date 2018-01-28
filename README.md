@@ -5,7 +5,7 @@ Android Things 更多显示相关的案例
 
 在入门开发配件包中，有提供红、绿、蓝三色的LED，那么我们是不是可以通过三种颜色的组合，显示我们需要的颜色呢？答案是肯定的。如下图连接三种颜色的LED。
 
-[使用入门配件包中的三种颜色的LED显示彩色](https://github.com/sysolve/androidthings-cameraCar/blob/master/photos/photo_3led.png)
+[使用入门配件包中的三种颜色的LED显示彩色](https://github.com/sysolve/androidthings-cameraCar/blob/master/photos/photo_3led.jpg)
 
 仅仅能让三种颜色亮起来是不够的，我们需要分别控制每种颜色的亮度，通过三种颜色的比例，才能达到显示所需颜色的效果。
 
