@@ -5,7 +5,7 @@ Android Things 更多显示相关的案例
 
 在入门开发配件包中，有提供红、绿、蓝三色的LED，那么我们是不是可以通过三种颜色的组合，显示我们需要的颜色呢？答案是肯定的。如下图连接三种颜色的LED。
 
-[使用入门配件包中的三种颜色的LED显示彩色](https://github.com/sysolve/androidthings-cameraCar/blob/master/photos/photo_3led.jpg)
+![使用入门配件包中的三种颜色的LED显示彩色](https://github.com/sysolve/androidthings-cameraCar/blob/master/photos/photo_3led.jpg)
 
 仅仅能让三种颜色亮起来是不够的，我们需要分别控制每种颜色的亮度，通过三种颜色的比例，才能达到显示所需颜色的效果。
 
@@ -37,19 +37,25 @@ pwmRed.setEnabled(true);
 
 我们可以试算一下，100Hz的刷新频率，即a+b=1000毫秒/100=10毫秒。那么要设置PwmDutyCycle=30，即a=3毫秒，b=7毫秒。毫秒级的GPIO控制，在Android Java层面还是可以胜任的，那么我们就可以动手写我们的SoftPwm了。具体代码可以参见Github上的源码，这里不再详述。
 
-面包板连线图
+![面包板连线图](https://github.com/sysolve/androidthings-cameraCar/blob/master/photos/schematics_color_led_touch_button.jpg)
+
 代码中增加了一个触摸按钮模块，切换三色灯全亮还是渐变两种显示模块，按钮模块功能和按键一样，都是通过GPIO输入信号，模块需要接3.3V或5V电源，GND和一个GPIO，例子代码中我们接在PIN_40上。
 
 下图是三种颜色的灯全亮的效果。
 
-彩色现实的效果
-下图是颜色渐变显示的效果，做个纸筒套在上面，颜色从纸反射出来，混色的效果更好。
+![三色灯全亮效果](https://github.com/sysolve/androidthings-cameraCar/blob/master/photos/photo_3led_on.jpg)
 
-可以套个纸筒，反射的颜色会混合在一起
+下图是颜色渐变显示的效果，做个纸筒套在上面，颜色从纸反射出来，混色的效果更好。可以套个纸筒，反射的颜色会混合在一起。
+
+![三色灯颜色渐变效果](https://github.com/sysolve/androidthings-cameraCar/blob/master/photos/photo_3led_color.jpg)
+
+![三色灯颜色渐变效果-动画](https://github.com/sysolve/androidthings-cameraCar/blob/master/photos/color_change_3led.webp)
+
 如果没有入门开发配件包，或者觉得使用3个LED连接电阻比较麻烦，那么我们可以用一个三色LED模块，其实就是集成了三色LED和电阻的模块，效果如下图。
 
-使用一个全彩LED模块更方便
-模块和电路原理图如下：
+使用一个全彩LED模块更方便，模块和电路原理图如下：
+
+![全彩LED模块](https://github.com/sysolve/androidthings-cameraCar/blob/master/photos/module_color_led.jpg)
 
 全彩LED模块的结构，相当于集成了红绿蓝三个LED
 
