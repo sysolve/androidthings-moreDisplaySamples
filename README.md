@@ -37,7 +37,7 @@ pwmRed.setEnabled(true);
 
 我们可以试算一下，100Hz的刷新频率，即a+b=1000毫秒/100=10毫秒。那么要设置PwmDutyCycle=30，即a=3毫秒，b=7毫秒。毫秒级的GPIO控制，在Android Java层面还是可以胜任的，那么我们就可以动手写我们的SoftPwm了。具体代码可以参见Github上的源码，这里不再详述。
 
-![面包板连线图](https://github.com/sysolve/androidthings-moreDisplaySamples/blob/master/photos/schematics_color_led_touch_button.jpg)
+![面包板连线图](https://github.com/sysolve/androidthings-moreDisplaySamples/blob/master/photos/schematics_color_led_touch_button.png)
 
 代码中增加了一个触摸按钮模块，切换三色灯全亮还是渐变两种显示模块，按钮模块功能和按键一样，都是通过GPIO输入信号，模块需要接3.3V或5V电源，GND和一个GPIO，例子代码中我们接在PIN_40上。
 
@@ -47,11 +47,11 @@ pwmRed.setEnabled(true);
 
 下图是颜色渐变显示的效果，做个纸筒套在上面，颜色从纸反射出来，混色的效果更好。可以套个纸筒，反射的颜色会混合在一起。
 
-![三色灯颜色渐变效果](https://github.com/sysolve/androidthings-moreDisplaySamples/blob/master/photos/photo_3led_color.jpg)
-
 ![三色灯颜色渐变效果-动画](https://github.com/sysolve/androidthings-moreDisplaySamples/blob/master/photos/color_change_3led.webp)
 
 如果没有入门开发配件包，或者觉得使用3个LED连接电阻比较麻烦，那么我们可以用一个三色LED模块，其实就是集成了三色LED和电阻的模块，效果如下图。
+
+![三色灯颜色渐变效果-动画](https://github.com/sysolve/androidthings-moreDisplaySamples/blob/master/photos/color_change_module_color_led1.webp)
 
 使用一个全彩LED模块更方便，模块和电路原理图如下：
 
@@ -59,13 +59,16 @@ pwmRed.setEnabled(true);
 
 全彩LED模块的结构，相当于集成了红绿蓝三个LED
 
+![三色灯颜色渐变效果-动画](https://github.com/sysolve/androidthings-moreDisplaySamples/blob/master/photos/color_change_module_color_led2.webp)
+
 数码管显示模块
 ----
 本例中，我们还引入了一个四色数码管模块，当按下触摸按钮时，我们会显示按下按钮的次数。
 
 接线很简单，VCC连接到+5V，GND接开发板的GND，CLK连接到开发板的PIN38，DIO连接到开发板的PIN36即可。
 
-4位数码管模块连接图
+![4位数码管模块连接图](https://github.com/sysolve/androidthings-moreDisplaySamples/blob/master/photos/schematics_4digitalDisplay.png)
+
 控制显示的代码也很简单：
 
 ```Java
@@ -89,10 +92,10 @@ OLED显示模块
 
 本例中，我们还引入了一个OLED显示模块，可以显示128*64个像素点，我们可以用它来显示图形和文字。
 
-OLED显示模块
 模块采用IIC接口，估连接到开发板的IIC接口即可，连接图如下：
 
-OLED显示模块
+![OLED显示模块连接图](https://github.com/sysolve/androidthings-moreDisplaySamples/blob/master/photos/schematics_oled.png)
+
 为不影响案例代码在未连接OLED模块时正常运行，OLED显示的代码目前是注释掉的，连接好模块，将代码取消注释即可。
 
 ```Java
@@ -106,7 +109,8 @@ OLED显示模块
 本例中使用到的模块
 ----
 
+![本例中使用到的模块](https://github.com/sysolve/androidthings-moreDisplaySamples/blob/master/photos/modules.jpg)
 
-如需要本例中使用到的以上四种模块，可以从淘宝购买：https://item.taobao.com/item.htm?id=564533484773
+如需要本例中使用到的以上四种模块，可以从淘宝购买：[https://item.taobao.com/item.htm?id=564533484773]
 
 树莓派3B开发板和NXP Pico开发板均适用，购买以上模块套装，赠送连接所需杜邦线。
