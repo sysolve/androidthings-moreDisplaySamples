@@ -1,3 +1,20 @@
+/*
+ * @author Ray, ray@sysolve.com
+ * Copyright 2018, Sysolve IoT Open Source
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package com.sysolve.androidthings.utils;
 
 import android.util.Log;
@@ -47,7 +64,7 @@ public class SoftPwm implements Runnable {
         onTime  = (int)Math.round(onTimeDouble);
         offTime = tt - onTime;
 
-        Log.i("SoftPwm", String.format("Soft PWM onTime=%dms, offTime=%dms", onTime, offTime));
+        //Log.i("SoftPwm", String.format("Soft PWM onTime=%dms, offTime=%dms", onTime, offTime));
     }
 
     public double getPwmDutyCycle() {
