@@ -24,7 +24,7 @@ import android.util.Log;
 import com.google.android.things.contrib.driver.tm1637.NumericDisplay;
 import com.google.android.things.pio.Gpio;
 import com.google.android.things.pio.GpioCallback;
-import com.google.android.things.pio.PeripheralManagerService;
+import com.google.android.things.pio.PeripheralManager;
 import com.google.android.things.pio.Pwm;
 import com.sysolve.androidthings.utils.BoardSpec;
 import com.sysolve.androidthings.utils.SoftPwm;
@@ -44,7 +44,7 @@ public class MainActivity extends Activity {
 
     private OledScreen oledScreen = null;
 
-    private static double PWM_FREQUENCY_HZ = 100;
+    private static double PWM_FREQUENCY_HZ = 50;
 
     private static  double A_RED = 1;
     private static  double A_GREEN = 0.5;
@@ -62,7 +62,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        PeripheralManagerService service = new PeripheralManagerService();
+        PeripheralManager service = PeripheralManager.getInstance();
         try {
             pwmRed = service.openPwm(BoardSpec.getInstance().getPwm(0));
             pwmGreen = service.openPwm(BoardSpec.getInstance().getPwm(1));
@@ -80,6 +80,8 @@ public class MainActivity extends Activity {
             pwmBlue.setPwmDutyCycle(100*A_BLUE);
             pwmBlue.setPwmFrequencyHz(PWM_FREQUENCY_HZ);
             pwmBlue.setEnabled(true);
+
+            toggleDisplayMode();
 
             //define a button for counter
             mButtonGpio = service.openGpio(BoardSpec.getGoogleSampleButtonGpioPin());
@@ -126,14 +128,14 @@ public class MainActivity extends Activity {
         }
 
         //要显示OLED显示屏，先连接好开发板到OLED屏的IIC连接线，再取消下面行的注释。开启OLED显示屏，会导致蓝色灯显示闪烁
-        //oledScreen = new OledScreen(this);
+        oledScreen = new OledScreen(this);
     }
 
     public void setRGB(int r, int g, int b) {
         try {
-            pwmRed.setPwmDutyCycle(r * A_RED);
-            pwmGreen.setPwmDutyCycle(g * A_GREEN);
-            pwmBlue.setPwmDutyCycle(b * A_BLUE);
+            pwmRed.setPwmDutyCycle(100-r * A_RED);
+            pwmGreen.setPwmDutyCycle(100-g * A_GREEN);
+            pwmBlue.setPwmDutyCycle(100-b * A_BLUE);
 
             Thread.sleep(50);
         } catch (Exception e) {
