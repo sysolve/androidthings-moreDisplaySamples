@@ -128,7 +128,7 @@ public class MainActivity extends Activity {
         }
 
         //要显示OLED显示屏，先连接好开发板到OLED屏的IIC连接线，再取消下面行的注释。开启OLED显示屏，会导致蓝色灯显示闪烁
-        oledScreen = new OledScreen(this);
+        //oledScreen = new OledScreen(this);
     }
 
     public void setRGB(int r, int g, int b) {
