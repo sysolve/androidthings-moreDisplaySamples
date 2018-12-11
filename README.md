@@ -3,6 +3,9 @@
 Android Things 更多显示相关的案例
 ----
 
+代码已升级到Android Things Developer Preview 8，建议先阅读我的《Android Things DP8新特性》一文，了解DP8中需要注意的地方。
+https://zhuanlan.zhihu.com/p/36168138
+
 在入门开发配件包中，有提供红、绿、蓝三色的LED，那么我们是不是可以通过三种颜色的组合，显示我们需要的颜色呢？答案是肯定的。如下图连接三种颜色的LED。
 
 ![使用入门配件包中的三种颜色的LED显示彩色](https://github.com/sysolve/androidthings-moreDisplaySamples/blob/master/photos/photo_3led.jpg)
